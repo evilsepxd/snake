@@ -1,3 +1,9 @@
+* {
+	padding: 0;
+	margin: 0;
+	box-sizing: border-box;
+}
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
@@ -10,4 +16,21 @@
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	height: 100vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	background: linear-gradient(150deg, rgba(23, 85, 83, 0.70) 1.7%, rgba(67, 217, 173, 0.09) 81.82%);
+	box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.30) inset;
+	backdrop-filter: blur(32px);
+}
+
+.game {
+	border-radius: 8px;
+	background: rgba(1, 22, 39, 0.84);
+	box-shadow: 1px 5px 11px 0px rgba(2, 18, 27, 0.71) inset;
 }
