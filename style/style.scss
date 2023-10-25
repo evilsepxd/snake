@@ -1,13 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
+
+@import './button.scss';
+
 * {
 	padding: 0;
 	margin: 0;
 	box-sizing: border-box;
+	border: none;
+	font-family: 'Fira Code', monospace;
 }
 
 :root {
-	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	font-weight: 400;
 
 	background-color: #242424;
 
@@ -29,7 +32,7 @@ body {
 	backdrop-filter: blur(32px);
 }
 
-.game {
+.game-field {
 	border-radius: 8px;
 	background: rgba(1, 22, 39, 0.84);
 	box-shadow: 1px 5px 11px 0px rgba(2, 18, 27, 0.71) inset;

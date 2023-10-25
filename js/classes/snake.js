@@ -107,9 +107,9 @@ class Snake {
 	isCoillisedWithBorder() {
 		if (
 			this.x <= this.radius
-			|| this.x >= this.radius + this.canvasWidth
+			|| this.x >= this.canvasWidth - this.radius
 			|| this.y <= this.radius
-			|| this.y >= this.radius + this.canvasWidth
+			|| this.y >= this.canvasHeight - this.radius
 		) {
 			console.log('over');
 		}
