@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 canvasHeight = canvas.height;
 	let animationId;
 
-	const snake = new Snake(98, 120, ctx);
+	const snake = new Snake(98, 120, ctx, canvasWidth, canvasHeight);
 	const food = new Food(98, 64, ctx, canvasWidth, canvasHeight);
 
 	function game() {
@@ -22,6 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		snake.draw();
 
 		snake.move();
+		snake.isCoillisedWithBorder();
 
 		if (snake.isCollisedWithFood(food.x, food.y, food.radius)) {
 			food.setNewFood();

@@ -1,8 +1,10 @@
 import getDistance from "../functions/getDistance";
 
 class Snake {
-	constructor(initX, initY, context) {
+	constructor(initX, initY, context, canvasWidth, canvasHeight) {
 		this.ctx = context;
+		this.canvasWidth = canvasWidth;
+		this.canvasHeight = canvasHeight;
 
 		this.speed = 1;
 		this.dir = 'top';
@@ -99,6 +101,18 @@ class Snake {
 		if (distance <= (this.radius + foodRadius)) {
 			return true;
 		} return false;
+	}
+
+
+	isCoillisedWithBorder() {
+		if (
+			this.x <= this.radius
+			|| this.x >= this.radius + this.canvasWidth
+			|| this.y <= this.radius
+			|| this.y >= this.radius + this.canvasWidth
+		) {
+			console.log('over');
+		}
 	}
 
 
