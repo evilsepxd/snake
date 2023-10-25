@@ -116,6 +116,32 @@ class Snake {
 	}
 
 
+	isCollisedWithItself() {
+		for (let i = 1; i < this.points.length; i++) {
+			const prevPoint = this.points[i - 1],
+				 point = this.points[i],
+				 maxX = Math.max(prevPoint.x, point.x),
+				 minX = Math.min(prevPoint.x, point.x),
+				 maxY = Math.max(prevPoint.y, point.y),
+				 minY = Math.min(prevPoint.y, point.y);
+
+			if ((
+					maxX === minX
+					&& this.y < maxY
+					&& this.y > minY
+					&& this.x === maxX
+				) || (
+					maxY === minY
+					&& this.x < maxX
+					&& this.x > minX
+					&& this.y === maxY
+				)) {
+				console.log('collised');
+			}
+		}
+	}
+
+
 	draw() {				// рисуем сначала голову змейки (полукруг), затем линию до каждой точки поворота
 		this.ctx.lineWidth = this.radius * 2;
 		this.ctx.lineCap = 'round';

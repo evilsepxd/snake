@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				}
 				
 				snake.isCoillisedWithBorder();
+				snake.isCollisedWithItself();
 		
 		
 		
