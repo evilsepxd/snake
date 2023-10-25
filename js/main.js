@@ -14,11 +14,20 @@ document.addEventListener('DOMContentLoaded', () => {
 		 canvasHeight = canvas.height;
 
 	let animationId = 0;
-	let mode = 'end';
+	let mode = 'start';
 
+	const snakeInit = {
+		x: 98,
+		y: 120
+	};
+	const foodInit = {
+		x: 98,
+		y: 64
+	}
 
-	const snake = new Snake(98, 120, ctx, canvasWidth, canvasHeight);
-	const food = new Food(98, 64, ctx, canvasWidth, canvasHeight);
+	const snake = new Snake(snakeInit.x, snakeInit.y, ctx, canvasWidth, canvasHeight);
+	const food = new Food(foodInit.x, foodInit.y, ctx, canvasWidth, canvasHeight);
+
 
 	function game() {
 
@@ -39,6 +48,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 				endBtn.addEventListener('click', () => {
 					mode = 'game';
+					snake.reset(snakeInit.x, snakeInit.y);
+					food.reset(foodInit.x, foodInit.y);
+
 					animationId = requestAnimationFrame(game);
 				});
 
@@ -56,8 +68,9 @@ document.addEventListener('DOMContentLoaded', () => {
 					snake.increazeSize();
 				}
 				
-				snake.isCoillisedWithBorder();
-				snake.isCollisedWithItself();
+				if (snake.isCoillisedWithBorder() || snake.isCollisedWithItself()) {
+					mode = 'end';
+				}
 		
 		
 		

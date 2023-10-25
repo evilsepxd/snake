@@ -43,6 +43,41 @@ class Snake {
 	}
 
 
+	reset(initX, initY) {
+		this.x = initX;
+		this.y = initY;
+		this.tailLength = 150;
+		this.dir = 'top';
+		this.vx = 0;
+		this.vy = -this.speed;
+
+		this.points = [
+			{
+				x: this.x,
+				y: this.y,
+				alpha: 1
+			},
+			{
+				x: this.x,
+				y: this.y + ((this.tailLength / 3) >> 0),
+				alpha: 0
+			},
+			{
+				x: this.x + ((this.tailLength / 3) >> 0),
+				y: this.y + ((this.tailLength / 3) >> 0),
+				alpha: 0
+			},
+			{
+				x: this.x + ((this.tailLength / 3) >> 0),
+				y: this.y + ((this.tailLength * 2 / 3) >> 0),
+				alpha: 0
+			}
+		]
+
+		this.calcAlpha(true);
+	}
+
+
 	increazeSize() {
 		this.tailLength += this.tailIncrease;
 		switch (this.dir) {
@@ -111,7 +146,7 @@ class Snake {
 			|| this.y <= this.radius
 			|| this.y >= this.canvasHeight - this.radius
 		) {
-			console.log('over');
+			return true;
 		}
 	}
 
@@ -136,7 +171,7 @@ class Snake {
 					&& this.x > minX
 					&& this.y === maxY
 				)) {
-				console.log('collised');
+				return true;
 			}
 		}
 	}

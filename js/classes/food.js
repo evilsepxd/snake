@@ -12,6 +12,12 @@ class Food {
 		this.spawnLimit = 50;
 	}
 
+
+	reset(initX, initY) {
+		this.x = initX;
+		this.y = initY;
+	}
+
 	
 	setNewFood() {
 		this.x = getRandomInt(this.spawnLimit, this.canvasWidth - this.spawnLimit);
