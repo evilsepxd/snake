@@ -17,21 +17,27 @@ class Snake {
 		this.points = [
 			{
 				x: this.x,
-				y: this.y
+				y: this.y,
+				alpha: 1
 			},
 			{
 				x: this.x,
-				y: this.y + Math.floor(this.tailLength / 3)
+				y: this.y + Math.floor(this.tailLength / 3),
+				alpha: 0
 			},
 			{
 				x: this.x + Math.floor(this.tailLength / 3),
-				y: this.y + Math.floor(this.tailLength / 3)
+				y: this.y + Math.floor(this.tailLength / 3),
+				alpha: 0
 			},
 			{
 				x: this.x + Math.floor(this.tailLength / 3),
-				y: this.y + Math.floor(this.tailLength * 2 / 3)
+				y: this.y + Math.floor(this.tailLength * 2 / 3),
+				alpha: 0
 			}
 		]
+
+		this.calcAlpha(true);
 	}
 
 
@@ -57,9 +63,34 @@ class Snake {
 		}
 	}
 
+	// вычисляем alpha для градиента
+	calcAlpha(init) {
+		for (let i = 1; i < this.points.length; i++) {
+			const prevPoint = this.points[i - 1],
+				 point = this.points[i];
+			
+			const lineLength = getDistance(prevPoint.x, prevPoint.y, point.x, point.y);
+			point.alpha = prevPoint.alpha - lineLength / this.tailLength;
+			if (!init) {
+				const gradient = this.ctx.createLinearGradient(
+					prevPoint.x,
+					prevPoint.y,
+					point.x,
+					point.y
+				);
+				gradient.addColorStop(0, `rgba(67, 217, 173, ${prevPoint.alpha})`);
+				gradient.addColorStop(1, `rgba(67, 217, 173, ${point.alpha})`);
+	
+				this.ctx.strokeStyle = gradient;
+				this.ctx.lineTo(point.x, point.y);
+				this.ctx.stroke();
+			}
+		}
+	}
+
 
 	addPoint() {
-		this.points.unshift({ x: this.x, y: this.y });
+		this.points.unshift({ x: this.x, y: this.y, alpha: 1 });
 	}
 
 
@@ -73,33 +104,12 @@ class Snake {
 
 	draw() {				// рисуем сначала голову змейки (полукруг), затем линию до каждой точки поворота
 		this.ctx.lineWidth = this.radius * 2;
-		this.ctx.lineJoin = 'round';
 		this.ctx.lineCap = 'round';
 
 		this.ctx.beginPath();
 		this.ctx.moveTo(this.x, this.y);
 
-		for (let i = 1; i < this.points.length; i++) {
-			
-		}
-
-		this.points.forEach((point, i) => {
-			if (i < this.points.length - 1) {
-				const gradient = this.ctx.createLinearGradient(
-					point.x,
-					point.y,
-					this.points[i + 1].x,
-					this.points[i + 1].y
-				);
-				gradient.addColorStop(0, `rgba(67, 217, 173, 1)`);
-				gradient.addColorStop(1, `rgba(67, 217, 173, 0)`);
-		
-				this.ctx.strokeStyle = gradient;
-			}
-
-			this.ctx.lineTo(point.x, point.y);
-			this.ctx.stroke();
-		});
+		this.calcAlpha(false);
 	}
 
 
