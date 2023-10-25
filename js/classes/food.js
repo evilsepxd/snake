@@ -1,4 +1,4 @@
-
+import getRandomInt from "../functions/getRandomInt";
 
 class Food {
 	constructor(initX, initY, context, canvasWidth, canvasHeight) {
@@ -36,12 +36,6 @@ class Food {
 		this.ctx.fillStyle = 'rgb(67, 217, 173)';
 		this.ctx.fill();
 	}
-}
-
-
-// получить случайное число для генерации еды на поле
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 export default Food;

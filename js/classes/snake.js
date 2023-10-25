@@ -1,3 +1,5 @@
+import getDistance from "../functions/getDistance";
+
 class Snake {
 	constructor(initX, initY, context) {
 		this.ctx = context;
@@ -62,7 +64,7 @@ class Snake {
 
 
 	isCollisedWithFood(foodX, foodY, foodRadius) {
-		const distance = Math.sqrt(Math.pow(this.x - foodX, 2) + Math.pow(this.y - foodY, 2));
+		const distance = getDistance(this.x, this.y, foodX, foodY);
 		if (distance <= (this.radius + foodRadius)) {
 			return true;
 		} return false;
@@ -76,6 +78,10 @@ class Snake {
 
 		this.ctx.beginPath();
 		this.ctx.moveTo(this.x, this.y);
+
+		for (let i = 1; i < this.points.length; i++) {
+			
+		}
 
 		this.points.forEach((point, i) => {
 			if (i < this.points.length - 1) {
