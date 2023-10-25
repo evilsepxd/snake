@@ -2,76 +2,143 @@ class Snake {
 	constructor(initX, initY, context) {
 		this.ctx = context;
 
-		this.speed = .1;
-		this.dir = 'bot';
+		this.speed = 1;
+		this.dir = 'top';
 		this.x = initX;
 		this.y = initY;
 		this.vx = 0;
 		this.vy = -this.speed;
-		this.motion = false;
 
 		this.radius = 6;
-		this.tailLength = 18;
-		this.initTurns = [];		// повороты змейки при инициализации игры
-		for (let i = 1; i < 3; i++) { // 2 поворота (змейка делится на 3 части)
-			this.initTurns.push(Math.floor(this.tailLength * i / 3));
-		}
-
-		this.tail = [				// первая часть хвоста
+		this.tailLength = 150;
+		this.tailIncrease = 100;
+		this.points = [
 			{
-				x: this.x - this.radius,
+				x: this.x,
 				y: this.y
+			},
+			{
+				x: this.x,
+				y: this.y + Math.floor(this.tailLength / 3)
+			},
+			{
+				x: this.x + Math.floor(this.tailLength / 3),
+				y: this.y + Math.floor(this.tailLength / 3)
+			},
+			{
+				x: this.x + Math.floor(this.tailLength / 3),
+				y: this.y + Math.floor(this.tailLength * 2 / 3)
 			}
-		];
-
-		for (let i = 1; i < this.tailLength; i++) {		// заполняем хвост
-			this.tail.push({
-				x: this.tail[i - 1].x + (i >= this.initTurns[0] && i < this.initTurns[1] ? this.radius * 2 : 0),
-				y: this.tail[i - 1].y + (i < this.initTurns[0] || i >= this.initTurns[1] ? this.radius * 2 : 0)
-			});
-		}
-
+		]
 	}
 
-	draw() {				// рисуем сначала голову змейки (полукруг), затем перебираем хвост
-		this.ctx.beginPath();
-		switch(this.dir) {
-			case 'top':
-				this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI, true);
-			case 'bot':
-				this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI, true);
-			case 'left':
-				this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI, true);
-			case 'right':
-				this.ctx.arc(this.x, this.y, this.radius, 0, Math.PI, true);
-		}
-		this.ctx.fillStyle = 'rgb(67, 217, 173)';
-		this.ctx.fill();
 
-		this.tail.forEach((cell, i) => {
-			this.ctx.fillStyle = `rgba(67, 217, 173, ${(this.tail.length - i) * (1 / this.tail.length)})`;
-			this.ctx.fillRect(cell.x, cell.y, this.radius * 2, this.radius * 2);
+	increazeSize() {
+		this.tailLength += this.tailIncrease;
+		// switch (this.dir) {
+		// 	case 'top':
+		// 		this.points.unshift({
+		// 			x: this.x,
+		// 			y: this.y - this.tailIncrease
+		// 		});
+		// 		break;
+		// 	case 'bot':
+		// 		this.points.unshift({
+		// 			x: this.x,
+		// 			y: this.y + this.tailIncrease
+		// 		});
+		// 		break;
+		// 	case 'left':
+		// 		this.points.unshift({
+		// 			x: this.x - this.tailIncrease,
+		// 			y: this.y
+		// 		});
+		// 		break;
+		// 	case 'right':
+		// 		this.points.unshift({
+		// 			x: this.x + this.tailIncrease,
+		// 			y: this.y
+		// 		});
+		// 		break;
+		// }
+	}
+
+
+	addPoint() {
+		this.points.unshift({ x: this.x, y: this.y });
+	}
+
+
+	isCollisedWithFood(foodX, foodY, foodRadius) {
+		const distance = Math.sqrt(Math.pow(this.x - foodX, 2) + Math.pow(this.y - foodY, 2));
+		if (distance <= (this.radius + foodRadius)) {
+			return true;
+		} return false;
+	}
+
+
+	draw() {				// рисуем сначала голову змейки (полукруг), затем линию до каждой точки поворота
+		this.ctx.lineWidth = this.radius * 2;
+		this.ctx.lineJoin = 'round';
+		this.ctx.lineCap = 'round';
+
+		this.ctx.beginPath();
+		this.ctx.moveTo(this.x, this.y);
+
+		this.points.forEach((point, i) => {
+			if (i < this.points.length - 1) {
+				const gradient = this.ctx.createLinearGradient(
+					point.x,
+					point.y,
+					this.points[i + 1].x,
+					this.points[i + 1].y
+				);
+				gradient.addColorStop(0, `rgba(67, 217, 173, 1)`);
+				gradient.addColorStop(1, `rgba(67, 217, 173, 0)`);
+		
+				this.ctx.strokeStyle = gradient;
+			}
+
+			this.ctx.lineTo(point.x, point.y);
+			this.ctx.stroke();
 		});
 	}
+
 
 	changeDirection(dir) {
 		switch(dir) {
 			case 'top':
+				if (this.dir === 'left' || this.dir === 'right') {
+					this.addPoint();
+				}
 				this.dir = 'top';
 				this.vx = 0;
 				this.vy = -this.speed;
+				break;
 			case 'bot':
+				if (this.dir === 'left' || this.dir === 'right') {
+					this.addPoint();
+				}
 				this.dir = 'bot';
 				this.vx = 0;
 				this.vy = this.speed;
+				break;
 			case 'left':
+				if (this.dir === 'top' || this.dir === 'bot') {
+					this.addPoint();
+				}
 				this.dir = 'left';
 				this.vx = -this.speed;
 				this.vy = 0;
+				break;
 			case 'right':
+				if (this.dir === 'top' || this.dir === 'bot') {
+					this.addPoint();
+				}
 				this.dir = 'right';
 				this.vx = this.speed;
 				this.vy = 0;
+				break;
 		}
 	}
 
@@ -82,10 +149,32 @@ class Snake {
 		this.x += this.vx;
 		this.y += this.vy;
 
-		this.tail.forEach((cell, i) => {
-			cell.x += this.vx;
-			cell.y += this.vy;
-		});
+		this.points[0].x = this.x;
+		this.points[0].y = this.y;
+
+		// двигаем последнюю точку в стороону первой, пока она её не достигнет,
+		// после чего удаляем её и последней становится предпоследняя
+
+		if (this.points.length > 1) {
+			const lastPoint = this.points[this.points.length - 1];
+			const preLastPoint = this.points[this.points.length - 2];
+			const lastPointDistanceX = preLastPoint.x - lastPoint.x;
+			const lastPointDistanceY = preLastPoint.y - lastPoint.y;
+
+			if (lastPointDistanceX > 0) {
+				lastPoint.x += this.speed;
+			} else if (lastPointDistanceX < 0) {
+				lastPoint.x -= this.speed;
+			} else if (lastPointDistanceX === 0 && lastPointDistanceY === 0) {
+				this.points.pop();
+			}
+
+			if (lastPointDistanceY > 0) {
+				lastPoint.y += this.speed;
+			} else if (lastPointDistanceY < 0) {
+				lastPoint.y -= this.speed;
+			}
+		}
 	}
 }
 

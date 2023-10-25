@@ -1,15 +1,21 @@
+
+
 class Food {
-	constructor(initX, initY, context) {
+	constructor(initX, initY, context, canvasWidth, canvasHeight) {
 		this.x = initX;
 		this.y = initY;
 		this.radius = 6;
 		this.ctx = context;
+		this.canvasWidth = canvasWidth;
+		this.canvasHeight = canvasHeight;
+
+		this.spawnLimit = 50;
 	}
 
 	
 	setNewFood() {
-		x = getRandomInt(0, canvasWidth);
-		y = getRandomInt(0, canvasHeight);
+		this.x = getRandomInt(this.spawnLimit, this.canvasWidth - this.spawnLimit);
+		this.y = getRandomInt(this.spawnLimit, this.canvasHeight - this.spawnLimit);
 	}
 
 	draw() {
@@ -30,6 +36,12 @@ class Food {
 		this.ctx.fillStyle = 'rgb(67, 217, 173)';
 		this.ctx.fill();
 	}
+}
+
+
+// получить случайное число для генерации еды на поле
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
 }
 
 export default Food;

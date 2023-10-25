@@ -9,9 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
 	const ctx = canvas.getContext('2d'),
 		 canvasWidth = canvas.width,
 		 canvasHeight = canvas.height;
+	let animationId;
 
 	const snake = new Snake(98, 120, ctx);
-	const food = new Food(98, 64, ctx);
+	const food = new Food(98, 64, ctx, canvasWidth, canvasHeight);
 
 	function game() {
 
@@ -19,15 +20,40 @@ document.addEventListener('DOMContentLoaded', () => {
 	
 		food.draw();
 		snake.draw();
-		
+
 		snake.move();
 
-		requestAnimationFrame(game);
-	}
-	const animationId = requestAnimationFrame(game);
+		if (snake.isCollisedWithFood(food.x, food.y, food.radius)) {
+			food.setNewFood();
+			snake.increazeSize();
+		}
 
-	// получить случайное число для генерации еды на поле
-	function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min)) + min;
+		document.addEventListener('keydown', e => {
+			switch (e.key) {
+				case 'ArrowUp':
+					if (snake.dir !== 'bot') {
+						snake.changeDirection('top');
+					}
+					break;
+				case 'ArrowDown':
+					if (snake.dir !== 'top') {
+						snake.changeDirection('bot');
+					}
+					break;
+				case 'ArrowLeft':
+					if (snake.dir !== 'right') {
+						snake.changeDirection('left');
+					}
+					break;
+				case 'ArrowRight':
+					if (snake.dir !== 'left') {
+						snake.changeDirection('right');
+					}
+					break;
+			}
+		});
+
+		animationId = requestAnimationFrame(game);
 	}
+	animationId = requestAnimationFrame(game);
 });
