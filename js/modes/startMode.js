@@ -6,10 +6,12 @@ function startMode() {
 	btn.textContent = 'start-game';
 
 	btn.addEventListener('click', () => {
-		btn.classList.remove('active');
 		setTimeout(() => {
-			btn.remove();
-		}, 300);
+			btn.classList.remove('active');
+			setTimeout(() => {
+				btn.remove();
+			}, 300);
+		}, 500);
 	});
 
 	container.appendChild(btn);

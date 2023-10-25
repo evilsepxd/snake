@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code&display=swap');
 
-@import './button.scss';
+@import './startMode.scss';
+@import './endMode.scss';
 
 * {
 	padding: 0;
@@ -30,6 +31,10 @@ body {
 	background: linear-gradient(150deg, rgba(23, 85, 83, 0.70) 1.7%, rgba(67, 217, 173, 0.09) 81.82%);
 	box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.30) inset;
 	backdrop-filter: blur(32px);
+}
+
+.game {
+	position: relative;
 }
 
 .game-field {

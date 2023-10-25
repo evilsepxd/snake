@@ -1,6 +1,7 @@
 import '../style/style.scss';
 
 import startMode from './modes/startMode';
+import endMode from './modes/endMode';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 canvasHeight = canvas.height;
 
 	let animationId = 0;
-	let mode = 'start';
+	let mode = 'end';
 
 
 	const snake = new Snake(98, 120, ctx, canvasWidth, canvasHeight);
@@ -32,6 +33,15 @@ document.addEventListener('DOMContentLoaded', () => {
 					mode = 'game';
 					animationId = requestAnimationFrame(game);
 				});
+				break;
+			case 'end':
+				const endBtn = endMode();
+
+				endBtn.addEventListener('click', () => {
+					mode = 'game';
+					animationId = requestAnimationFrame(game);
+				});
+
 				break;
 			case 'game':
 				ctx.clearRect(0, 0, canvasWidth, canvasHeight);
