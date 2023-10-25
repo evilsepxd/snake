@@ -22,17 +22,17 @@ class Snake {
 			},
 			{
 				x: this.x,
-				y: this.y + Math.floor(this.tailLength / 3),
+				y: this.y + ((this.tailLength / 3) >> 0),
 				alpha: 0
 			},
 			{
-				x: this.x + Math.floor(this.tailLength / 3),
-				y: this.y + Math.floor(this.tailLength / 3),
+				x: this.x + ((this.tailLength / 3) >> 0),
+				y: this.y + ((this.tailLength / 3) >> 0),
 				alpha: 0
 			},
 			{
-				x: this.x + Math.floor(this.tailLength / 3),
-				y: this.y + Math.floor(this.tailLength * 2 / 3),
+				x: this.x + ((this.tailLength / 3) >> 0),
+				y: this.y + ((this.tailLength * 2 / 3) >> 0),
 				alpha: 0
 			}
 		]
