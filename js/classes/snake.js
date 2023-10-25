@@ -11,7 +11,7 @@ class Snake {
 
 		this.radius = 6;
 		this.tailLength = 150;
-		this.tailIncrease = 100;
+		this.tailIncrease = 20;
 		this.points = [
 			{
 				x: this.x,
@@ -35,32 +35,24 @@ class Snake {
 
 	increazeSize() {
 		this.tailLength += this.tailIncrease;
-		// switch (this.dir) {
-		// 	case 'top':
-		// 		this.points.unshift({
-		// 			x: this.x,
-		// 			y: this.y - this.tailIncrease
-		// 		});
-		// 		break;
-		// 	case 'bot':
-		// 		this.points.unshift({
-		// 			x: this.x,
-		// 			y: this.y + this.tailIncrease
-		// 		});
-		// 		break;
-		// 	case 'left':
-		// 		this.points.unshift({
-		// 			x: this.x - this.tailIncrease,
-		// 			y: this.y
-		// 		});
-		// 		break;
-		// 	case 'right':
-		// 		this.points.unshift({
-		// 			x: this.x + this.tailIncrease,
-		// 			y: this.y
-		// 		});
-		// 		break;
-		// }
+		switch (this.dir) {
+			case 'top':
+				this.x = this.x;
+				this.y = this.y - this.tailIncrease;
+				break;
+			case 'bot':
+				this.x = this.x;
+				this.y = this.y + this.tailIncrease;
+				break;
+			case 'left':
+				this.x = this.x - this.tailIncrease;
+				this.y = this.y;
+				break;
+			case 'right':
+				this.x = this.x + this.tailIncrease;
+				this.y = this.y;
+				break;
+		}
 	}
 
 
