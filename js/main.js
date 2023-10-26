@@ -1,14 +1,17 @@
 import '../style/style.scss';
+import '../style/game.scss'
 
 import startMode from './modes/startMode';
 import endMode from './modes/endMode';
+
+import listenForDirectionChange from './functions/listenForDirectionChange';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
 
 document.addEventListener('DOMContentLoaded', () => {
 	
-	const canvas = document.querySelector('.game-field');
+	const canvas = document.querySelector('.canvas');
 	const ctx = canvas.getContext('2d'),
 		 canvasWidth = canvas.width,
 		 canvasHeight = canvas.height;
@@ -71,33 +74,10 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (snake.isCoillisedWithBorder() || snake.isCollisedWithItself()) {
 					mode = 'end';
 				}
-		
-		
-		
-				document.addEventListener('keydown', e => {
-					switch (e.key) {
-						case 'ArrowUp':
-							if (snake.dir !== 'bot') {
-								snake.changeDirection('top');
-							}
-							break;
-						case 'ArrowDown':
-							if (snake.dir !== 'top') {
-								snake.changeDirection('bot');
-							}
-							break;
-						case 'ArrowLeft':
-							if (snake.dir !== 'right') {
-								snake.changeDirection('left');
-							}
-							break;
-						case 'ArrowRight':
-							if (snake.dir !== 'left') {
-								snake.changeDirection('right');
-							}
-							break;
-					}
-				});
+
+
+				listenForDirectionChange(snake);
+
 
 				animationId = requestAnimationFrame(game);
 				break;
