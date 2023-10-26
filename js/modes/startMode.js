@@ -1,5 +1,5 @@
 function startMode() {
-	const container = document.querySelector('.game');
+	const container = document.querySelector('.game__field');
 	const btn = document.createElement('button');
 
 	btn.classList.add('btn-start', 'active');
