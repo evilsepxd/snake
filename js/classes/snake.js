@@ -17,7 +17,7 @@ class Snake {
 
 		this.radius = 6;
 		this.tailLength = 150;
-		this.tailIncrease = 15;
+		this.tailIncrease = 20;
 		this.points = [
 			{
 				x: this.x,

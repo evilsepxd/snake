@@ -8,6 +8,7 @@ import endMode from './modes/endMode';
 
 import listenForDirectionChange from './functions/listenForDirectionChange';
 import createFood from './functions/createFood';
+import resetFood from './functions/resetFood';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
@@ -43,7 +44,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 	function game() {
-		console.log('active');
 		switch (mode) {
 			case 'start':
 				const startBtn = startMode();
@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			snake.reset(snakeInit.x, snakeInit.y);
 			food.reset(foodInit.x, foodInit.y);
 			currentFood = 0;
+			resetFood(foodContainer);
 		}
 	}
 	animationId = requestAnimationFrame(game);
