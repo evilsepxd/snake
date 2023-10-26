@@ -1,12 +1,12 @@
 .game {
 	position: relative;
 	width: 510px;
-	height: 475px;
+	min-height: 475px;
 
 	padding: 35px 30px 35px 30px;
 
 	display: grid;
-	grid-template: auto auto / repeat(2, auto);
+	grid-template: 144px auto / repeat(2, auto);
 	gap: 20px 24px;
 
 	border-radius: 8px;
@@ -37,6 +37,7 @@
 
 .arrows {
 	padding: 16px 13px 12px;
+	max-width: 185px;
 
 	border-radius: 8px;
 	background: rgba(1, 20, 35, 0.19);
@@ -82,8 +83,6 @@
 
 .game__field {
 	position: relative;
-	width: 240px;
-	height: 405px;
 
 	grid-row: 1 / 3;
 }
@@ -92,4 +91,17 @@
 	border-radius: 8px;
 	background: rgba(1, 22, 39, 0.84);
 	box-shadow: 1px 5px 11px 0px rgba(2, 18, 27, 0.71) inset;
+}
+
+@media (max-width: 576px) {
+	.game {
+		grid-template: auto / auto;
+		justify-content: center;
+	}
+	.arrows {
+		max-width: unset;
+		&__text {
+			margin-bottom: 0;
+		}
+	}
 }

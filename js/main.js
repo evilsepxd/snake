@@ -9,13 +9,18 @@ import endMode from './modes/endMode';
 import listenForDirectionChange from './functions/listenForDirectionChange';
 import createFood from './functions/createFood';
 import resetFood from './functions/resetFood';
+import createArrows from './functions/createArrows';
+import isMobile from './functions/isMobile';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
 
 document.addEventListener('DOMContentLoaded', () => {
+	const media = isMobile();
+	createArrows(media);
 	
 	const canvas = document.querySelector('.canvas');
+
 	const ctx = canvas.getContext('2d'),
 		 canvasWidth = canvas.width,
 		 canvasHeight = canvas.height;
@@ -40,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	const foodContainer = createFood(foodAmountInit);
 
 
-	listenForDirectionChange(snake);
+	listenForDirectionChange(snake, media);
 
 
 	function game() {
