@@ -1,4 +1,4 @@
-function endMode() {
+function endMode(win) {
 	const container = document.querySelector('.game__field');
 	const btn = document.createElement('button');
 	const banner = document.createElement('div');
@@ -7,7 +7,7 @@ function endMode() {
 	btn.textContent = 'start-again';
 
 	banner.classList.add('banner-end', 'active');
-	banner.textContent = 'GAME OVER!';
+	banner.textContent = win ? 'WELL DONE!' : 'GAME OVER!';
 
 	btn.addEventListener('click', () => {
 		setTimeout(() => {

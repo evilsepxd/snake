@@ -30,21 +30,25 @@ function listenForDirectionChange(snake) {
 	document.addEventListener('keydown', e => {
 		switch (e.key) {
 			case 'ArrowUp':
+				e.preventDefault();
 				if (snake.dir !== 'bot') {
 					snake.changeDirection('top');
 				}
 				break;
 			case 'ArrowDown':
+				e.preventDefault();
 				if (snake.dir !== 'top') {
 					snake.changeDirection('bot');
 				}
 				break;
 			case 'ArrowLeft':
+				e.preventDefault();
 				if (snake.dir !== 'right') {
 					snake.changeDirection('left');
 				}
 				break;
 			case 'ArrowRight':
+				e.preventDefault();
 				if (snake.dir !== 'left') {
 					snake.changeDirection('right');
 				}

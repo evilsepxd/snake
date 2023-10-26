@@ -1,3 +1,5 @@
+'use strict';
+
 import '../style/style.scss';
 import '../style/game.scss'
 
@@ -37,8 +39,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	const foodContainer = createFood(foodAmountInit);
 
 
-	function game() {
+	listenForDirectionChange(snake);
 
+
+	function game() {
+		console.log('active');
 		switch (mode) {
 			case 'start':
 				const startBtn = startMode();
@@ -52,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 				break;
 			case 'end':
-				const endBtn = endMode();
+				const endBtn = endMode(false);
 
 				endBtn.addEventListener('click', () => {
 					reset();
@@ -61,20 +66,28 @@ document.addEventListener('DOMContentLoaded', () => {
 				});
 
 				break;
+			case 'win':
+				const winBtn = endMode(true);
+
+				winBtn.addEventListener('click', () => {
+					reset();
+
+					animationId = requestAnimationFrame(game);
+				});
+
+				break;
 			case 'game':
 				ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-	
 
 				food.draw();
 				snake.draw();
 				snake.move();
 		
 				if (snake.isCollisedWithFood(food.x, food.y, food.radius)) {
-					console.log(foodContainer);
 					foodContainer[currentFood].classList.add('eaten');
 					currentFood++;
 					if (currentFood === foodAmountInit) {
-						// reset();
+						mode = 'win';
 					} else {
 						food.setNewFood();
 						snake.increazeSize();
@@ -84,9 +97,6 @@ document.addEventListener('DOMContentLoaded', () => {
 				if (snake.isCoillisedWithBorder() || snake.isCollisedWithItself()) {
 					mode = 'end';
 				}
-
-
-				listenForDirectionChange(snake);
 
 
 				animationId = requestAnimationFrame(game);

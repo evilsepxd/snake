@@ -1,3 +1,5 @@
+'use strict';
+
 import getRandomInt from "../functions/getRandomInt";
 
 class Food {

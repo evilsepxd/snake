@@ -1,3 +1,5 @@
+'use strict';
+
 import getDistance from "../functions/getDistance";
 
 class Snake {
@@ -15,7 +17,7 @@ class Snake {
 
 		this.radius = 6;
 		this.tailLength = 150;
-		this.tailIncrease = 20;
+		this.tailIncrease = 15;
 		this.points = [
 			{
 				x: this.x,
@@ -179,6 +181,7 @@ class Snake {
 
 	draw() {				// рисуем сначала голову змейки (полукруг), затем линию до каждой точки поворота
 		this.ctx.lineWidth = this.radius * 2;
+		this.ctx.lineJoin = 'round';
 		this.ctx.lineCap = 'round';
 
 		this.ctx.beginPath();
