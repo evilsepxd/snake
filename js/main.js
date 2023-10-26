@@ -5,6 +5,7 @@ import startMode from './modes/startMode';
 import endMode from './modes/endMode';
 
 import listenForDirectionChange from './functions/listenForDirectionChange';
+import createFood from './functions/createFood';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
@@ -16,9 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		 canvasWidth = canvas.width,
 		 canvasHeight = canvas.height;
 
-	let animationId = 0;
-	let mode = 'start';
-
+		 
 	const snakeInit = {
 		x: 98,
 		y: 120
@@ -27,9 +26,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		x: 98,
 		y: 64
 	}
+	const foodAmountInit = 10;
+
+	let animationId = 0;
+	let mode = 'start';
+	let currentFood = 0;
 
 	const snake = new Snake(snakeInit.x, snakeInit.y, ctx, canvasWidth, canvasHeight);
 	const food = new Food(foodInit.x, foodInit.y, ctx, canvasWidth, canvasHeight);
+	const foodContainer = createFood(foodAmountInit);
 
 
 	function game() {
@@ -50,9 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
 				const endBtn = endMode();
 
 				endBtn.addEventListener('click', () => {
-					mode = 'game';
-					snake.reset(snakeInit.x, snakeInit.y);
-					food.reset(foodInit.x, foodInit.y);
+					reset();
 
 					animationId = requestAnimationFrame(game);
 				});
@@ -67,8 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
 				snake.move();
 		
 				if (snake.isCollisedWithFood(food.x, food.y, food.radius)) {
-					food.setNewFood();
-					snake.increazeSize();
+					console.log(foodContainer);
+					foodContainer[currentFood].classList.add('eaten');
+					currentFood++;
+					if (currentFood === foodAmountInit) {
+						// reset();
+					} else {
+						food.setNewFood();
+						snake.increazeSize();
+					}
 				}
 				
 				if (snake.isCoillisedWithBorder() || snake.isCollisedWithItself()) {
@@ -83,6 +93,13 @@ document.addEventListener('DOMContentLoaded', () => {
 				break;
 		}
 
+
+		function reset() {
+			mode = 'game';
+			snake.reset(snakeInit.x, snakeInit.y);
+			food.reset(foodInit.x, foodInit.y);
+			currentFood = 0;
+		}
 	}
 	animationId = requestAnimationFrame(game);
 });
