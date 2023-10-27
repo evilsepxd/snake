@@ -105,3 +105,10 @@
 		}
 	}
 }
+
+@media (max-height: 647px) {
+	.game {
+		min-height: unset;
+		height: 100vh;
+	}
+}

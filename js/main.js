@@ -11,6 +11,8 @@ import createFood from './functions/createFood';
 import resetFood from './functions/resetFood';
 import createArrows from './functions/createArrows';
 import isMobile from './functions/isMobile';
+import isMaxHeight from './functions/isMaxHeight';
+import isMaxWidth from './functions/isMaxWidth';
 
 import Snake from './classes/snake';
 import Food from './classes/food';
@@ -20,6 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
 	createArrows(media);
 	
 	const canvas = document.querySelector('.canvas');
+	const mediaHeigth = isMaxHeight();
+	const mediaWidth = isMaxWidth();
+	if (mediaHeigth && mediaWidth) {
+		const gameContainer = document.querySelector('.game');
+		canvas.height = gameContainer.offsetHeight - 240;
+	}
 
 	const ctx = canvas.getContext('2d'),
 		 canvasWidth = canvas.width,
